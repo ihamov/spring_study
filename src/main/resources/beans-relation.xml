@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    
+    <!-- 可以在本bean增加 abstract="true"属性
+                    另外，如果一个bean没有指定class属性，则该bean必须为抽象bean(abstract="true")
+    -->
+    <bean id="address" 
+        p:city="BeiJing" p:street="WuDaoKou" abstract="true"></bean>
+    <!-- 使用parent属性，进行继承配置 ，也可以在父bean中增加abstract="true"属性，使之成为抽象bean，该bean不能被实例化-->
+    <bean id="address2" class="com.du.spring.beans.autowire.Address" parent="address" p:street="DaZhongSi"></bean>
+    <bean id="address3" parent="address2" p:street="WuDaoKou"></bean>
+    
+    
+    
+    <!-- 要求在配置Person时 ，必须有一个关联的car，也就是person这个bean依赖于Car这个bean
+        car会在person初始化之前进行初始化
+    -->
+    <bean id="person" class="com.du.spring.beans.autowire.Person" 
+        p:name="Tom" p:address-ref="address2" depends-on="car" p:car-ref="car"></bean>
+
+    <bean id="car" class="com.du.spring.beans.autowire.Car"
+        p:brand="baoma" p:price="200000"></bean>
+</beans>
