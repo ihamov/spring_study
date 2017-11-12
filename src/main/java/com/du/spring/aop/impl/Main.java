@@ -18,5 +18,8 @@ public class Main {
         result = calculator.div(12, 6);
         System.out.println("result:"+result);
 
+        result = calculator.div(12, 0);
+        System.out.println("result:"+result);
+
     }
 }
