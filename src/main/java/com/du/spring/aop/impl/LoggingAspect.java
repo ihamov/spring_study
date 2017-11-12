@@ -1,6 +1,7 @@
 package com.du.spring.aop.impl;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +53,38 @@ public class LoggingAspect {
         String methodName = joinPoint.getSignature().getName();
         System.out.println("The Method "+ methodName +" occurs exception with: "+ex);
 
+    }
+
+    /**
+     * 环绕通知：该通知需要携带ProceedingJoinPoint类型的参数
+     * 环绕通知类似于动态代理的全过程：ProceedingJoinPoint 类型的参数可以决定是否执行目标方法
+     * 且环绕通知必须有返回值，返回值即为目标方法的返回值
+     * @param proceedingJoinPoint
+     */
+    @Around(value = "execution(* com.du.spring.aop.impl.ArithmeticCalculator.*(int, int))")
+    public Object aroundMethod(ProceedingJoinPoint proceedingJoinPoint){
+
+        Object result = null;
+        String methodName = proceedingJoinPoint.getSignature().getName();
+        List<Object> args = Arrays.asList(proceedingJoinPoint.getArgs());
+        //执行目标方法
+        try {
+            //前置通知，
+            System.out.println("--The Method "+ methodName +" begins with : " + args);
+            result = proceedingJoinPoint.proceed();
+            //返回通知
+            System.out.println("--The Method "+ methodName +" ends with : " + result);
+        } catch (Throwable throwable) {
+            //异常通知
+            System.out.println("--The Method occurs exception:"+ throwable);
+            throwable.printStackTrace();
+            throw new RuntimeException(throwable);
+        }
+
+        //后置通知
+        System.out.println("--The Method "+ methodName +" ends");
+
+        return result;
     }
 
 }
