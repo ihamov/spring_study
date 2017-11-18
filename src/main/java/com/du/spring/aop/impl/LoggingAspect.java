@@ -13,11 +13,21 @@ import java.util.List;
 public class LoggingAspect {
 
     /**
+     * 定义一个方法，用于声明切入点表达式，该方法不需要其他实现代码
+     * 使用@Pointcut来声明切入点表达式，
+     * 后面的其他通知可以直接使用方法名来引用当前的切入点表达式。
+     */
+    @Pointcut(value = "execution(* com.du.spring.aop.impl.ArithmeticCalculator.*(int, int))")
+    public void declareJoinPointExpression(){
+
+    }
+
+    /**
      * 声明该方法是一个前置通知：
      * 在目标方法开始执行之前执行
      * JoinPoint可以获取到一些连接细节，例如方法名，参数等
      */
-    @Before(value = "execution(* com.du.spring.aop.impl.ArithmeticCalculator.*(int, int))")
+    @Before(value = "declareJoinPointExpression()")
     public void beforeMethod(JoinPoint joinPoint){
         String methodName = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());

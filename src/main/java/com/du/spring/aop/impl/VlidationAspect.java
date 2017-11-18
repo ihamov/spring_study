@@ -15,8 +15,11 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class VlidationAspect {
-
-    @Before(value = "execution(* com.du.spring.aop.impl.ArithmeticCalculator.*(..))")
+    /**
+     * 如果declareJoinPointExpression切点表达式不在同一包下，还需要加上包名才可以
+     * @param joinPoint
+     */
+    @Before(value = "LoggingAspect.declareJoinPointExpression()")
     public void validateArgs(JoinPoint joinPoint){
         System.out.println("validate:"+ Arrays.asList(joinPoint.getArgs()));
 
