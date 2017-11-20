@@ -5,7 +5,7 @@ public class Employee {
     private String lastName;
     private Integer gender;
     private String email;
-    private Department department;
+    private Integer deptId;
 
     public Integer getId() {
         return id;
@@ -39,12 +39,12 @@ public class Employee {
         this.email = email;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Integer getDeptId() {
+        return deptId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", gender=" + gender +
                 ", email='" + email + '\'' +
-                ", department=" + department +
+                ", deptId=" + deptId +
                 '}';
     }
 }
