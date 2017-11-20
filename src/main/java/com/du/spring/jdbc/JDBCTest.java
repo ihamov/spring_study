@@ -17,11 +17,19 @@ public class JDBCTest {
     private ApplicationContext ctx = null;
     private JdbcTemplate jdbcTemplate;
     private EmployeeDao employeeDao;
+    private DepartmentDao departmentDao;
 
     {
         ctx = new ClassPathXmlApplicationContext("applicationJDBC.XML");
         jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
         employeeDao = ctx.getBean(EmployeeDao.class);
+        departmentDao = ctx.getBean(DepartmentDao.class);
+    }
+
+    @Test
+    public void testDepartmentDao(){
+        Department department = departmentDao.get(1);
+        System.out.println(department);
     }
 
     @Test
