@@ -7,15 +7,25 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+
 public class TransactionTest {
     private ApplicationContext ctx;
     private BookShopDao bookShopDao;
     private BookShopService bookShopService;
+    private Cashier cashier;
 
     {
         ctx = new ClassPathXmlApplicationContext("applicationContext-Tx.XML");
         bookShopDao = ctx.getBean(BookShopDao.class);
         bookShopService = ctx.getBean(BookShopService.class);
+        cashier = ctx.getBean(Cashier.class);
+
+    }
+
+    @Test
+    public void testTransactionPropagation(){
+        cashier.checkout("AA", Arrays.asList("1001","1002"));
 
     }
 
